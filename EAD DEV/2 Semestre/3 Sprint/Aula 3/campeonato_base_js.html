@@ -74,11 +74,37 @@
         console.log(nomeTimes);
 
         //3. Adicione mais um time chamado Wolves, vitorias 12, empates 8, derrotas 10, gols proprios 38, golscontras 36;
+        console.log('Ex 3 - Adicionar time Wolves');
+        let nomeTime = {
+            nome : 'Wolves',
+            vitorias : 12,
+            empates : 8,
+            derrotas : 10,
+            golsproprio : 38,
+            golscontra : 36
+        }
+        times.push(nomeTime);
+        console.log(times);
 
         //4. Mostre o nome e a quantidade de jogos(vitorias, empates e derrotas), quantidade de vitorias, empates e derrotas de um time
+        console.log('Ex 4 - Nome do time e quantia de jogos')
+        let dadosTime = times.map(time => {
+            return {
+                nome : time.nome,
+                quantidadeJogos : time.vitorias + time.empates + time.derrotas,
+                vitorias : time.vitorias,
+                empates : time.empates,
+                derrotas : time.derrotas
+            }
+        })
+        console.log(dadosTime);
 
         //5. Informe a quantidade de jogos do campeonato;
-
+        console.log('Ex 5 - Jogos do Campeonato')
+        let todosJogos = dadosTime.reduce((jogos, time) => {
+            return jogos + time.quantidadeJogos
+        }, 0)
+        console.log(todosJogos);
 
     </script>
 
