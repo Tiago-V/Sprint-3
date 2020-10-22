@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filmes</title>
+</head>
+<body>
+    
+    <form id="form">
+        <input type="text" id="nome" placeholder="Nome do filme" required>
+        <input type="text" id="categoria" placeholder="Categoria" required>
+        <input type="text" id="ano" placeholder="Ano de lançamento" required>
+
+        <button type="button" onclick="cadastrar()" id="btnCadastrar">Cadastrar</button>
+        <button type="button" onclick="remover()" id="btnRemover">Remover</button>
+
+        <table>
+            <caption>Filmes</caption>
+            <thead>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Nome
+                </th>
+                <th>
+                    Categoria
+                </th>
+                <th>
+                    Ano Lançamento
+                </th>
+            </thead>
+            <tbody id="tabela-lista-corpo"></tbody>
+        </table>
+    </form>
+
+</body>
+<script>
+    let url = 'https://5f80487ad6aabe00166f1345.mockapi.io/nomes';
+    let nome = document.querySelector('#nome');
+    let categoria = document.querySelector('#categoria');
+    let ano = document.querySelector('#ano');
+
+    function listar(){
+        let xhr = new XMLHttpRequest();
+
+        xhr.onload = listarSucesso;
+
+        xhr.onerror = listarErro;
+
+        xhr.open('GET', url);
+
+        xhr.send();
+    }
+
+    function listarSucesso(){
+        if(this.status === 200){
+            console.log(this.responseText);
+            let data = JSON.parse(this.responseText);
+            console.log(data);
+        }
+    }
+
+    function listarErro(err){
+        console.log(err);
+    }
+
+     function cadastrar(){
+        event.preventDefault();
+
+        //cria o objeto
+        const params = {
+            name : categoria.value
+        }
+
+        let xhrPost = new XMLHttpRequest();
+        xhrPost.onload = cadastroSucesso;
+        xhrPost.onerror = cadastroErro;
+        //Envia por post
+        xhrPost.open('POST', url);
+        xhrPost.setRequestHeader('content-type', 'application/json');
+        //Converte para json e envia o objeto
+        xhrPost.send(JSON.stringify(params));
+    }
+
+    function cadastroSucesso(){
+        if(this.status === 201){
+            alert('Categoria cadastrada');
+
+            listar();
+        }
+    }
+
+    function cadastroErro(err){
+        console.log('Erro no cadastro: ' + err);
+    }
+
+
+    //1 - Criar url filmes com os Endpoints Get, Get/{id}, Post, Put, Delete no mockapi
+    //2 - Usando o html fornecido cadastre um novo filme com o seu nome, ano de lançamento e categoria
+    //3 - Listar os filmes na tabela
+    //4 - Exclua um filme pelo seu nome
+
+</script>
+</html>
